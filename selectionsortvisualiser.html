@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript</title>
+    <script src=
+    "http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.8/processing.min.js"></script>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas> <script>
+var canvas = document.getElementById("canvas");
+    var processing = new Processing(canvas, function(processing) {
+        processing.size(400, 400);
+        processing.background(0xFFF);
+
+        var mouseIsPressed = false;
+        processing.mousePressed = function () { mouseIsPressed = true; };
+        processing.mouseReleased = function () { mouseIsPressed = false; };
+
+        var keyIsPressed = false;
+        processing.keyPressed = function () { keyIsPressed = true; };
+        processing.keyReleased = function () { keyIsPressed = false; };
+
+        function getImage(s) {
+            var url = "https://www.kasandbox.org/programming-images/" + s + ".png";
+            processing.externals.sketch.imageCache.add(url);
+            return processing.loadImage(url);
+        }
+
+        with (processing) {
+
+
+            var posY = 14;
+
+    var swap = function(array, firstIndex, secondIndex) {
+    var temp = array[firstIndex];
+    array[firstIndex] = array[secondIndex];
+    array[secondIndex] = temp;
+    };
+
+    var indexOfMinimum = function(array, startIndex) {
+
+    var minValue = array[startIndex];
+    var minIndex = startIndex;
+
+    for(var i = minIndex + 1; i < array.length; i++) {
+        if(array[i] < minValue) {
+            minIndex = i;
+            minValue = array[i];
+        }
+    } 
+    return minIndex;
+    }; 
+
+    //display array on canvas
+    var displayArray = function(array) {
+    textFont(createFont("monospace"),12);
+    fill(255, 0, 0);
+    text(array,10,posY);
+    posY += 31;
+
+    };
+
+    //find x postion of index in array
+    var findIndxPox = function(indx){
+    var posX = (indx+1) * 20;
+    strokeWeight(1);
+    return posX;
+    };
+
+    //draw line indicating swapping
+    var drawLine = function(x1,x2){
+    line(x1,posY - 32,x2,posY - 11);
+    };
+
+    var selectionSort = function(array) {
+
+    var indx;
+    var count = 0;
+    for(var i=0 ; i<array.length ; i++){
+        count++;
+        displayArray(array);
+        
+        
+        indx = indexOfMinimum(array,i);
+        
+        if(i !== array.length - 1 ){
+            drawLine(findIndxPox(indx), findIndxPox(i));
+        }
+       
+        swap(array,i,indx);
+        
+    }
+    };
+
+        //draw quadrant
+        line(200,0,200,400);
+        line(0,200,400,200);
+
+        //display arrays in a quadrant
+        pushMatrix();
+        translate(10,10);
+        var array = [22, 11, 99, 88, 9];
+        selectionSort(array);
+        popMatrix();
+
+        pushMatrix();
+        translate(250,-145);
+        var array1 = [99, 88, 22, 11, 9];
+        selectionSort(array1);
+        popMatrix();
+
+        pushMatrix();
+        translate(250,-98);
+        var array2 = [99, 99, 88, 88, 9];
+        selectionSort(array2);
+        popMatrix();
+
+        pushMatrix();
+        translate(10,-249);
+        var array3 = [9,11, 22, 88, 12];
+        selectionSort(array3);
+        popMatrix();
+
+
+
+
+
+
+
+
+
+        }
+        if (typeof draw !== 'undefined') processing.draw = draw;
+    });
+    </script>
+</body>
+</html>
